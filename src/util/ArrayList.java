@@ -94,4 +94,32 @@ public class ArrayList <E> implements List <E> {
         }
         return -1;
     }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iter();
+    }
+
+    @Override
+    public Iterator<E> iterator(int index) {
+        return new Iter(index);
+    }
+
+    private class Iter implements Iterator<E> {
+        private int cursor = -1;
+
+        private Iter() {}
+        private Iter(int index) {cursor = index - 1;}
+
+        @Override
+        public boolean hasNext() {
+            return cursor < size - 1;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public E next() {
+            return (E) ArrayList.this.data[++cursor];
+        }
+    }
 }

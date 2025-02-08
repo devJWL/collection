@@ -10,8 +10,6 @@ public interface List <E>{
     int indexOf(E e);
     int lastIndexOf(E e);
 
-//    Iterator<E> iterator();
-//    Iterator<E> iterator(int index);
-//    ListIterator<E> listIterator();
-//    ListIterator<E> listIterator(int index);
+    Iterator<E> iterator();
+    Iterator<E> iterator(int index);
 }
