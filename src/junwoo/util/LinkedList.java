@@ -1,5 +1,7 @@
 package junwoo.util;
 
+import java.util.NoSuchElementException;
+
 public class LinkedList <E> implements List<E> {
     private Node<E> first;
     private Node<E> last;
@@ -114,6 +116,36 @@ public class LinkedList <E> implements List<E> {
         return new Iter(index);
     }
 
+    public ListIterator<E> listIterator() {
+        return new ListIter();
+    }
+
+    public ListIterator<E> listIterator(int index) {
+        return new ListIter(index);
+    }
+
+    Node<E> node(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("out of bounds");
+        }
+
+        Node<E> node;
+
+        if (index < (size >> 1)) {
+            node = first.next;
+            for (int i = 0; i < index; ++i) {
+                node = node.next;
+            }
+        } else {
+            node = last.prev;
+            for (int i = size - 1; i > index; --i) {
+                node = node.prev;
+            }
+        }
+
+        return node;
+    }
+
     private static class Node<E> {
         Node<E> prev;
         Node<E> next;
@@ -135,11 +167,7 @@ public class LinkedList <E> implements List<E> {
         }
 
         private Iter(int index) {
-            cursor = first;
-            while(index > 0) {
-                cursor = cursor.next;
-                --index;
-            }
+            cursor = node(index - 1);
         }
 
         @Override
@@ -149,8 +177,65 @@ public class LinkedList <E> implements List<E> {
 
         @Override
         public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No such element");
+            }
             cursor = cursor.next;
             return cursor.element;
+        }
+    }
+
+    private class ListIter implements ListIterator<E> {
+        private Node<E> lastReturned;
+        private Node<E> next;
+        private int nextIndex;
+
+        ListIter() {}
+        ListIter(int index) {}
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public E next() {
+            return null;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+
+        @Override
+        public E previous() {
+            return null;
+        }
+
+        @Override
+        public int nextIndex() {
+            return 0;
+        }
+
+        @Override
+        public int previousIndex() {
+            return 0;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+
+        @Override
+        public void set(E e) {
+
+        }
+
+        @Override
+        public void add(E e) {
+
         }
     }
 }
