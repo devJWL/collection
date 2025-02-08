@@ -74,7 +74,18 @@ public class LinkedList <E> implements List<E> {
 
     @Override
     public int indexOf(E e) {
-        return 0;
+        if (size == 0) return -1;
+        int index = 0;
+
+        Node<E> node = first.next;
+        while(node != last) {
+            if (node.element.equals(e)) {
+                return index;
+            }
+            node = node.next;
+            ++index;
+        }
+        return -1;
     }
 
     @Override
