@@ -22,15 +22,8 @@ public class ArrayList <E> implements List <E> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean contains(E e) {
-        for (int i = 0; i < size; i++) {
-            E item = (E) data[i];
-            if (item.equals(e)) {
-                return true;
-            }
-        }
-        return false;
+        return indexOf(e) != -1;
     }
 
     @Override
