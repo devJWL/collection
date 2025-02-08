@@ -29,17 +29,47 @@ public class LinkedList <E> implements List<E> {
 
     @Override
     public boolean add(E element) {
-        return false;
+        if (size == 0) {
+            Node<E> newNode = new Node<>(first, last, element);
+            first.next = newNode;
+            last.prev = newNode;
+        }
+        else {
+            Node<E> newNode = new Node<>(last.prev, last, element);
+            last.prev.next = newNode;
+            last.prev = newNode;
+        }
+        ++size;
+        return true;
     }
 
     @Override
     public E get(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("out of bounds");
+        }
+
+        Node<E> node = first;
+        while(index > -1) {
+            node = node.next;
+            --index;
+        }
+        return node.element;
     }
 
     @Override
     public E remove() {
-        return null;
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("out of bounds");
+        }
+        Node<E> node = last.prev;
+        E element = node.element;
+
+        last.prev = node.prev;
+        node.prev.next = last;
+        --size;
+
+        return element;
     }
 
     @Override
@@ -65,13 +95,13 @@ public class LinkedList <E> implements List<E> {
     private static class Node<E> {
         Node<E> prev;
         Node<E> next;
-        E data;
+        E element;
 
         public Node() {}
-        public Node(Node<E> prev, Node<E> next, E data) {
+        public Node(Node<E> prev, Node<E> next, E element) {
             this.prev = prev;
             this.next = next;
-            this.data = data;
+            this.element = element;
         }
     }
 }
