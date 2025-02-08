@@ -24,7 +24,7 @@ public class LinkedList <E> implements List<E> {
 
     @Override
     public boolean contains(E e) {
-        return false;
+        return indexOf(e) != -1;
     }
 
     @Override
