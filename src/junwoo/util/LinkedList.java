@@ -90,7 +90,18 @@ public class LinkedList <E> implements List<E> {
 
     @Override
     public int lastIndexOf(E e) {
-        return 0;
+        if (size == 0) return -1;
+        int index = size - 1;
+
+        Node<E> node = last.prev;
+        while (node != first) {
+            if (node.element.equals(e)) {
+                return index;
+            }
+            node = node.prev;
+            --index;
+        }
+        return -1;
     }
 
     @Override
