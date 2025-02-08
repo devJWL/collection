@@ -1,5 +1,7 @@
 package junwoo.util;
 
+import java.util.NoSuchElementException;
+
 public class ArrayList <E> implements List <E> {
     private Object[] data;
     private int capacity;
@@ -112,6 +114,9 @@ public class ArrayList <E> implements List <E> {
         @Override
         @SuppressWarnings("unchecked")
         public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No such element");
+            }
             return (E) ArrayList.this.data[++cursor];
         }
     }
