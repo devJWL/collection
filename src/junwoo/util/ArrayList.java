@@ -1,4 +1,4 @@
-package util;
+package junwoo.util;
 
 public class ArrayList <E> implements List <E> {
     private Object[] data;

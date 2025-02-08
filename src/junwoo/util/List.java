@@ -1,4 +1,4 @@
-package util;
+package junwoo.util;
 
 public interface List <E>{
     int size();
