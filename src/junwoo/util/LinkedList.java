@@ -106,12 +106,12 @@ public class LinkedList <E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new Iter();
     }
 
     @Override
     public Iterator<E> iterator(int index) {
-        return null;
+        return new Iter(index);
     }
 
     private static class Node<E> {
@@ -124,6 +124,33 @@ public class LinkedList <E> implements List<E> {
             this.prev = prev;
             this.next = next;
             this.element = element;
+        }
+    }
+
+    private class Iter implements Iterator<E> {
+        private Node<E> cursor;
+
+        private Iter() {
+            cursor = first;
+        }
+
+        private Iter(int index) {
+            cursor = first;
+            while(index > 0) {
+                cursor = cursor.next;
+                --index;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return cursor.next != last;
+        }
+
+        @Override
+        public E next() {
+            cursor = cursor.next;
+            return cursor.element;
         }
     }
 }
