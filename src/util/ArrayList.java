@@ -1,11 +1,13 @@
 package util;
 
-public class ArrayList <T> implements List <T> {
+public class ArrayList <E> implements List <E> {
     private Object[] data;
+    private int capacity;
     private int size;
 
     public ArrayList() {
         final int INIT_CAPACITY = 10;
+        capacity = INIT_CAPACITY;
         data = new Object[INIT_CAPACITY];
     }
 
@@ -16,46 +18,80 @@ public class ArrayList <T> implements List <T> {
 
     @Override
     public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public boolean contains(E e) {
+        for (int i = 0; i < size; i++) {
+            E item = (E) data[i];
+            if (item.equals(e)) {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
-    public boolean contains(Object o) {
-        return false;
+    public boolean add(E element) {
+        if (size == capacity) {
+            grow();
+        }
+        data[size++] = element;
+        return true;
+    }
+
+    private void grow() {
+        capacity *= 2;
+        Object[] newData = new Object[capacity];
+        for (int i = 0; i < size; ++i) {
+            newData[i] = data[i];
+        }
+        data = newData;
     }
 
     @Override
-    public boolean add(T element) {
-        return false;
+    @SuppressWarnings("unchecked")
+    public E get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("out of bounds");
+        }
+        return (E) data[index];
     }
 
     @Override
-    public boolean remove(Object o) {
-        return false;
+    @SuppressWarnings("unchecked")
+    public E remove() {
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("out of bounds");
+        }
+        E e = (E) data[--size];
+        data[size] = null;
+        return e;
     }
 
     @Override
-    public T get(int index) {
-        return null;
+    @SuppressWarnings("unchecked")
+    public int indexOf(E o) {
+        for (int i = 0; i < size; ++i) {
+            E item = (E) data[i];
+            if (item.equals(o)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
-    public T set(int index, T element) {
-        return null;
-    }
-
-    @Override
-    public T remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
+    @SuppressWarnings("unchecked")
     public int lastIndexOf(Object o) {
-        return 0;
+        for (int i = size - 1; i >= 0; --i) {
+            E item = (E) data[i];
+            if (item.equals(o)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

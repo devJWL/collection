@@ -1,19 +1,14 @@
 package util;
 
-import java.util.Iterator;
-import java.util.ListIterator;
-
 public interface List <E>{
     int size();
     boolean isEmpty();
-    boolean contains(Object o);
+    boolean contains(E e);
     boolean add(E element);
-    boolean remove(Object o);
     E get(int index);
-    E set(int index, E element);
-    E remove(int index);
-    int indexOf(Object o);
-    int lastIndexOf(Object o);
+    E remove();
+    int indexOf(E e);
+    int lastIndexOf(E e);
 
 //    Iterator<E> iterator();
 //    Iterator<E> iterator(int index);
